@@ -2,6 +2,7 @@
   "name": "beeplugin_example",
   "private": true,
   "dependencies": {
+    "@mailupinc/bee-plugin": "^1.2.2",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",

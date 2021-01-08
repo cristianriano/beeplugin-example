@@ -16,7 +16,3 @@ require("channels")
 // const imagePath = (name) => images(name, true)
 
 import "./bee";
-
-jQuery(function () {
-  Bee.init();
-});

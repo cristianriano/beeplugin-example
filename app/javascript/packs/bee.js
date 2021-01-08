@@ -1,54 +1,36 @@
-(function ($, Bee, undefined) {
-  Bee.init = function () {
-    $.ajax({ url: "/editor/token", success: Bee.create });
+import Bee from "@mailupinc/bee-plugin";
+
+function initBee() {
+  $.ajax({ url: "/editor/token", success: startBee });
+}
+
+function beeConfig() {
+  return {
+    uid: "RailsExampleApp",
+    container: "bee-plugin-container",
+    language: "en-US",
+    autosave: false,
+    preventClose: false,
+    onSave: (jsonFile, htmlFile) => {
+      console.log("onSave", jsonFile, htmlFile);
+    },
+    onSaveAsTemplate: (jsonFile) => {
+      console.log("onSaveAsTemplate", jsonFile);
+    },
+    onSend: (htmlFile) => {
+      console.log("onSend", htmlFile);
+    },
+    onError: (errorMessage) => {
+      console.log("onError ", errorMessage);
+    },
   };
+}
 
-  Bee.create = function (token) {
-    BeePlugin.create(token, Bee.config(), Bee.on_create);
-  };
+function startBee(auth) {
+  $.ajax({
+    url: $("#bee-plugin-container").data("template"),
+    success: (template) => new Bee(auth).start(beeConfig(), template),
+  });
+}
 
-  Bee.on_save = function (jsonFile, htmlFile) {};
-
-  Bee.on_save_as_template = function (jsonFile) {};
-
-  Bee.on_auto_save = function (jsonFile) {};
-
-  Bee.on_send = function (htmlFile) {};
-
-  Bee.on_error = function (errorMessages) {
-    console.log("onError ", errorMessages);
-  };
-
-  Bee.on_create = function (bee) {
-    $.ajax({
-      url: $("#bee-plugin-container").data("template"),
-      success: Bee.on_load_template,
-    });
-    window.bee = bee;
-  };
-
-  (Bee.on_load_template = function (template) {
-    window.bee.start(template);
-  }),
-    (Bee.config = function () {
-      return {
-        uid: "RailsExampleApp",
-        container: "bee-plugin-container",
-        autosave: false,
-        language: "en-US",
-        preventClose: false,
-        specialLinks: [
-          {
-            type: "unsubscribe",
-            label: "SpecialLink.Unsubscribe",
-            link: "http://[unsubscribe]/",
-          },
-        ],
-        onSave: Bee.on_save,
-        onSaveAsTemplate: Bee.on_save_as_template,
-        onAutoSave: Bee.on_auto_save,
-        onSend: Bee.on_send,
-        onError: Bee.on_error,
-      };
-    });
-})(jQuery, (window.Bee = window.Bee || {}));
+$(document).on("turbolinks:load", initBee);
