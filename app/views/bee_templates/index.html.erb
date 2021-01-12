@@ -1,0 +1,7 @@
+<h1> BeePlugin Integration </h1>
+
+<%= form_tag new_bee_template_path, method: :get do %>
+  <%= label_tag 'Choose the template' %>
+  <%= select_tag :template_id, options_from_collection_for_select(@templates, :id, :name), include_blank: false %>
+  <%= submit_tag 'Load', class: 'btn btn-primary' %>
+<% end %>

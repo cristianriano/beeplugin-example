@@ -1,7 +1,7 @@
 import Bee from "@mailupinc/bee-plugin";
 
 function initBee() {
-  $.ajax({ url: "/editor/token", success: startBee });
+  $.ajax({ url: "/bee_templates/token", success: startBee });
 }
 
 function beeConfig() {
