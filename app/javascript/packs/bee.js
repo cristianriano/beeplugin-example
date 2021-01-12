@@ -1,6 +1,8 @@
 import Bee from "@mailupinc/bee-plugin";
 
 function initBee() {
+  if ($("#bee-plugin-container").length == 0) return;
+
   $.ajax({ url: "/bee_templates/token", success: startBee });
 }
 
