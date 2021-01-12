@@ -17,7 +17,15 @@ function beeConfig() {
       console.log("onSave", jsonFile, htmlFile);
     },
     onSaveAsTemplate: (jsonFile) => {
-      console.log("onSaveAsTemplate", jsonFile);
+      let name = prompt("Template name", "My template");
+
+      $.ajax({
+        method: "POST",
+        url: "/bee_templates",
+        data: { template: jsonFile, name: name },
+        success: () => alert("Template saved"),
+        error: (msg) => alert(`Couldn't save the template ${msg}`),
+      });
     },
     onSend: (htmlFile) => {
       console.log("onSend", htmlFile);

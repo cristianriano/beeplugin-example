@@ -8,7 +8,11 @@ class BeeTemplatesController < ApplicationController
   end
 
   def create
-    # TODO
+    if upsert_template
+      head :ok
+    else
+      head 400
+    end
   end
 
   def index
@@ -30,5 +34,14 @@ class BeeTemplatesController < ApplicationController
     )
 
     render json: res.body
+  end
+
+  private
+
+  def upsert_template
+    BeeTemplate.upsert(
+      { name: params['name'], content: params['template'] },
+      unique_by: :name
+    )
   end
 end
