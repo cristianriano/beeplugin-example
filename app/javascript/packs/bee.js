@@ -6,6 +6,7 @@ function initBee() {
   $.ajax({ url: "/bee_templates/token", success: startBee });
 }
 
+// For a complete list on the supported params https://docs.beefree.io/configuration-parameters/
 function beeConfig() {
   return {
     uid: "RailsExampleApp",
@@ -13,6 +14,10 @@ function beeConfig() {
     language: "en-US",
     autosave: false,
     preventClose: false,
+    mergeTags: [
+      { name: "First Name", value: "{{firstName}}" },
+      { name: "Last Name", value: "{{lastName}}" },
+    ],
     onSave: (jsonFile, htmlFile) => {
       console.log("onSave", jsonFile, htmlFile);
     },
